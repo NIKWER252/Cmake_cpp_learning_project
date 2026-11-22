@@ -57,7 +57,7 @@ void task1()
             cout << "Зарплата (в рублях): ";
             cin >> employees[i].salary;
             cout << endl;
-            if (((i > 0) and (employees[i].number == employees[i-1].number)) || ((i > 1) and (employees[i].number == employees[i-2].number)))
+            if (((i > 0) && (employees[i].number == employees[i-1].number)) || ((i > 1) && (employees[i].number == employees[i-2].number)))
             {
                 cout << "Номера не могут совпадать" << endl;
                 i --;
