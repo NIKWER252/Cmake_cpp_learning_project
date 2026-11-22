@@ -21,7 +21,7 @@ endif()
 if (MSVC)
     add_compile_options(/utf-8)
 endif()
-
+# текст
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
 add_executable(Lab1_n1 Lab1/Lab1_n1.cpp)
 add_executable(Lab1_n2 Lab1/Lab1_n2.cpp)
