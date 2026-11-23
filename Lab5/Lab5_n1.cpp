@@ -2,6 +2,8 @@
 #include <windows.h>
 #include <cstdlib>
 
+using namespace std;
+
 struct fraction
 {
     int numerator;
@@ -10,8 +12,8 @@ struct fraction
 
 int gcd(int a, int b)
 {
-    a = std::abs(a);
-    b = std::abs(b);
+    a = abs(a);
+    b = abs(b);
     while (b != 0) {
         int temp = b;
         b = a % b;
@@ -30,30 +32,30 @@ int main()
     char slash;
     int count = 0;
 
-    std::cout << "Введите дроби в формате a/b (для завершения введите q):\n";
+    cout << "Введите дроби в формате a/b (для завершения введите q):\n";
 
     while (count < MAX_SIZE)
     {
-        std::cout << "Дробь #" << (count + 1) << ": ";
-        std::cin >> std::ws;
-        if (std::cin.peek() == 'q' || std::cin.peek() == 'Q')
+        cout << "Дробь #" << (count + 1) << ": ";
+        cin >> ws;
+        if (cin.peek() == 'q' || cin.peek() == 'Q')
         {
             break;
         }
 
-        std::cin >> arr[count].numerator >> slash >> arr[count].denominator;
+        cin >> arr[count].numerator >> slash >> arr[count].denominator;
 
-        if (!std::cin)
+        if (!cin)
         {
-            std::cout << "Ошибка ввода! Попробуйте ещё раз.\n";
-            std::cin.clear();
-            std::cin.ignore(10000, '\n');
+            cout << "Ошибка ввода! Попробуйте ещё раз.\n";
+            cin.clear();
+            cin.ignore(10000, '\n');
             continue;
         }
 
         if (arr[count].denominator == 0)
         {
-            std::cout << "На ноль делить нельзя! Попробуйте ещё раз.\n";
+            cout << "На ноль делить нельзя! Попробуйте ещё раз.\n";
             continue;
         }
 
@@ -62,7 +64,7 @@ int main()
 
     if (count == 0)
     {
-        std::cout << "Вы не ввели ни одной дроби.\n";
+        cout << "Вы не ввели ни одной дроби.\n";
         return 0;
     }
 
@@ -86,21 +88,21 @@ int main()
     average.numerator /= g;
     average.denominator /= g;
 
-    std::cout << "\nВведено дробей: " << count << "\n";
-    std::cout << "Среднее значение: ";
+    cout << "\nВведено дробей: " << count << "\n";
+    cout << "Среднее значение: ";
     if (average.denominator == 1)
     {
-        std::cout << average.numerator << "\n";
+        cout << average.numerator << "\n";
     }
-    else if (std::abs(average.numerator) > average.denominator)
+    else if (abs(average.numerator) > average.denominator)
     {
-        std::cout << average.numerator / average.denominator << " "
-            << std::abs(average.numerator) % average.denominator << "/"
+        cout << average.numerator / average.denominator << " "
+            << abs(average.numerator) % average.denominator << "/"
             << average.denominator << "\n";
     }
     else
     {
-        std::cout << average.numerator << "/" << average.denominator << "\n";
+        cout << average.numerator << "/" << average.denominator << "\n";
     }
 
     return 0;

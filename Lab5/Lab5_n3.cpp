@@ -1,64 +1,33 @@
-﻿#include <iostream>
+#include <iostream>
+#include <cstring>
 #include <windows.h>
-#include <cstdlib>
 
-const int MAX_SIZE = 100;
+using namespace std;
 
-int maxint(int* arr, int size)
+void reversit(char str[])
 {
-    int maxIndex = 0;
-    for (int i = 1; i < size; ++i)
+    int len = strlen(str);
+    for (int i = 0; i < len / 2; i++)
     {
-        if (arr[i] > arr[maxIndex])
-            maxIndex = i;
+        char temp = str[i];
+        str[i] = str[len - 1 - i];
+        str[len - 1 - i] = temp;
     }
-    return maxIndex;
 }
 
 int main()
 {
-    SetConsoleCP(65001);
-    SetConsoleOutputCP(65001);
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
 
-    int arr[MAX_SIZE];
-    int count = 0;
+    const int MAX = 100;
+    char str[MAX];
 
-    std::cout << "Введите целые числа (для завершения введите q):\n";
+    cout << "������� ������: ";
+    cin.get(str, MAX);
 
-    while (count < MAX_SIZE)
-    {
-        std::cout << "Число #" << (count + 1) << ": ";
+    reversit(str);
 
-        std::cin >> std::ws;
-        if (std::cin.peek() == 'q' || std::cin.peek() == 'Q')
-            break;
-
-        int value;
-        std::cin >> value;
-
-        if (!std::cin)
-        {
-            std::cout << "Ошибка ввода! Введите целое число или q.\n";
-            std::cin.clear();
-            std::cin.ignore(10000, '\n');
-            continue;
-        }
-
-        arr[count] = value;
-        ++count;
-    }
-
-    if (count == 0)
-    {
-        std::cout << "Вы не ввели ни одного числа.\n";
-        return 0;
-    }
-
-    int maxIndex = maxint(arr, count);
-
-    std::cout << "\nВведено чисел: " << count << "\n";
-    std::cout << "Наибольший элемент: " << arr[maxIndex] << "\n";
-    std::cout << "Его индекс в массиве: " << maxIndex << "\n";
-
+    cout << "����������� ������: " << str << endl;
     return 0;
 }
