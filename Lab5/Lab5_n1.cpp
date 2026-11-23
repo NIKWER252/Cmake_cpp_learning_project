@@ -32,12 +32,9 @@ int main()
 
     std::cout << "Введите дроби в формате a/b (для завершения введите q):\n";
 
-    // Ввод дробей до тех пор, пока не введён 'q' или не достигнут лимит
     while (count < MAX_SIZE)
     {
         std::cout << "Дробь #" << (count + 1) << ": ";
-
-        // Пропускаем пробельные символы и проверяем, не хочет ли пользователь выйти
         std::cin >> std::ws;
         if (std::cin.peek() == 'q' || std::cin.peek() == 'Q')
         {
@@ -69,7 +66,6 @@ int main()
         return 0;
     }
 
-    // Вычисление суммы всех дробей
     fraction sum{ 0, 1 };
     for (int i = 0; i < count; ++i)
     {
@@ -82,7 +78,6 @@ int main()
         sum.denominator /= g;
     }
 
-    // Среднее значение = сумма / count
     fraction average{};
     average.numerator = sum.numerator;
     average.denominator = sum.denominator * count;
@@ -91,7 +86,6 @@ int main()
     average.numerator /= g;
     average.denominator /= g;
 
-    // Вывод результата
     std::cout << "\nВведено дробей: " << count << "\n";
     std::cout << "Среднее значение: ";
     if (average.denominator == 1)

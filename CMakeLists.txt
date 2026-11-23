@@ -50,3 +50,5 @@ add_executable(Lab4_n5 Lab4/Lab4_n5.cpp)
 add_executable(Lab4_all Lab4/Lab4_all.cpp)
 
 add_executable(Lab5_n1 Lab5/Lab5_n1.cpp)
+add_executable(Lab5_n2 Lab5/Lab5_n2.cpp)
+add_executable(Lab5_n3 Lab5/Lab5_n3.cpp)
