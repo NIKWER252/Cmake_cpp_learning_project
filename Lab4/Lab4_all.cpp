@@ -4,6 +4,8 @@
 #include <limits>
 #include <windows.h>
 
+using namespace std;
+
 struct Time
 {
     int hours;
@@ -19,7 +21,7 @@ long time_to_secs(const Time& t)
 Time secs_to_time(long totalSecs)
 {
     Time t;
-    t.hours   = static_cast<int>(totalSecs / 3600);
+    t.hours = static_cast<int>(totalSecs / 3600);
     t.minutes = static_cast<int>((totalSecs % 3600) / 60);
     t.seconds = static_cast<int>(totalSecs % 60);
     return t;
@@ -39,22 +41,22 @@ Time read_time(const char* prompt)
 
     while (true)
     {
-        std::cout << prompt;
-        std::cin >> t.hours >> colon >> t.minutes >> colon >> t.seconds;
+        cout << prompt;
+        cin >> t.hours >> colon >> t.minutes >> colon >> t.seconds;
 
-        if (std::cin.fail())
+        if (cin.fail())
         {
-            std::cin.clear();
-            std::cin.ignore(10000, '\n');
-            std::cout << "РћС€РёР±РєР°! РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚.\n";
-            std::cout << "Р’РІРµРґРёС‚Рµ РІСЂРµРјСЏ РІ С„РѕСЂРјР°С‚Рµ С‡С‡:РјРј:СЃСЃ.\n\n";
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "Ошибка! Некорректный формат.\n";
+            cout << "Введите время в формате чч:мм:сс.\n\n";
             continue;
         }
 
         if (!is_valid(t))
         {
-            std::cout << "РћС€РёР±РєР°! РќРµРєРѕСЂСЂРµРєС‚РЅРѕРµ РІСЂРµРјСЏ.\n";
-            std::cout << "Р§Р°СЃС‹ >= 0, РјРёРЅСѓС‚С‹ Рё СЃРµРєСѓРЅРґС‹ РѕС‚ 0 РґРѕ 59.\n\n";
+            cout << "Ошибка! Некорректное время.\n";
+            cout << "Часы >= 0, минуты и секунды от 0 до 59.\n\n";
             continue;
         }
 
@@ -64,10 +66,10 @@ Time read_time(const char* prompt)
 
 void print_time(const char* label, const Time& t)
 {
-    std::cout << label
-              << std::setfill('0') << std::setw(2) << t.hours << ":"
-              << std::setfill('0') << std::setw(2) << t.minutes << ":"
-              << std::setfill('0') << std::setw(2) << t.seconds << "\n";
+    cout << label
+        << setfill('0') << setw(2) << t.hours << ":"
+        << setfill('0') << setw(2) << t.minutes << ":"
+        << setfill('0') << setw(2) << t.seconds << "\n";
 }
 
 int read_int(const char* prompt)
@@ -75,20 +77,20 @@ int read_int(const char* prompt)
     int value;
     while (true)
     {
-        std::cout << prompt;
-        std::cin >> value;
-        if (std::cin.fail())
+        cout << prompt;
+        cin >> value;
+        if (cin.fail())
         {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "РћС€РёР±РєР°! Р’РІРµРґРёС‚Рµ С†РµР»РѕРµ С‡РёСЃР»Рѕ.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Ошибка! Введите целое число.\n";
             continue;
         }
         return value;
     }
 }
 
-// ======================= Р—Р°РґР°РЅРёРµ 1 =======================
+// ======================= Задание 1 =======================
 
 long hms_to_secs(int hours, int minutes, int seconds)
 {
@@ -105,38 +107,41 @@ void task1()
     {
         while (true)
         {
-            hours   = read_int("Р’РІРµРґРёС‚Рµ С‡Р°СЃС‹: ");
-            minutes = read_int("Р’РІРµРґРёС‚Рµ РјРёРЅСѓС‚С‹: ");
-            seconds = read_int("Р’РІРµРґРёС‚Рµ СЃРµРєСѓРЅРґС‹: ");
+            hours = read_int("Введите часы: ");
+            minutes = read_int("Введите минуты: ");
+            seconds = read_int("Введите секунды: ");
             if (hours < 0 || minutes < 0 || seconds < 0)
             {
-                std::cout << "Р’СЂРµРјСЏ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Рј" << std::endl;
+                cout << "Время не может быть отрицательным" << endl;
                 continue;
             }
             break;
         }
 
-        std::cout << "Р’ СЃРµРєСѓРЅРґР°С…: " << hms_to_secs(hours, minutes, seconds) << std::endl;
-        std::cout << "РџСЂРѕРґРѕР»Р¶РёС‚СЊ? (y/n): ";
-        std::cin >> check;
-    }
-    while (check == 'y');
+        cout << "В секундах: " << hms_to_secs(hours, minutes, seconds) << endl;
+        cout << "Продолжить? (y/n): ";
+        cin >> check;
+    } while (check == 'y');
+    cin.clear();
+    cin.ignore(10000, '\n');
 }
 
-// ======================= Р—Р°РґР°РЅРёРµ 2 =======================
+// ======================= Задание 2 =======================
 
 void task2()
 {
-    Time t1 = read_time("Р’РІРµРґРёС‚Рµ РїРµСЂРІРѕРµ РІСЂРµРјСЏ (С‡С‡:РјРј:СЃСЃ): ");
-    Time t2 = read_time("Р’РІРµРґРёС‚Рµ РІС‚РѕСЂРѕРµ РІСЂРµРјСЏ (С‡С‡:РјРј:СЃСЃ): ");
+    Time t1 = read_time("Введите первое время (чч:мм:сс): ");
+    Time t2 = read_time("Введите второе время (чч:мм:сс): ");
 
     long totalSecs = time_to_secs(t1) + time_to_secs(t2);
     Time sum = secs_to_time(totalSecs);
 
-    print_time("РЎСѓРјРјР°: ", sum);
+    print_time("Сумма: ", sum);
+    cin.clear();
+    cin.ignore(10000, '\n');
 }
 
-// ======================= Р—Р°РґР°РЅРёРµ 3 =======================
+// ======================= Задание 3 =======================
 
 void swap_ints(int& a, int& b)
 {
@@ -147,15 +152,17 @@ void swap_ints(int& a, int& b)
 
 void task3()
 {
-    int x = read_int("Р’РІРµРґРёС‚Рµ x: ");
-    int y = read_int("Р’РІРµРґРёС‚Рµ y: ");
+    int x = read_int("Введите x: ");
+    int y = read_int("Введите y: ");
 
     swap_ints(x, y);
 
-    std::cout << "x = " << x << ", y = " << y << std::endl;
+    cout << "x = " << x << ", y = " << y << endl;
+    cin.clear();
+    cin.ignore(10000, '\n');
 }
 
-// ======================= Р—Р°РґР°РЅРёРµ 4 =======================
+// ======================= Задание 4 =======================
 
 void swap_times(Time& a, Time& b)
 {
@@ -166,83 +173,110 @@ void swap_times(Time& a, Time& b)
 
 void task4()
 {
-    Time t1 = read_time("Р’РІРµРґРёС‚Рµ РїРµСЂРІРѕРµ РІСЂРµРјСЏ (С‡С‡:РјРј:СЃСЃ): ");
-    Time t2 = read_time("Р’РІРµРґРёС‚Рµ РІС‚РѕСЂРѕРµ РІСЂРµРјСЏ (С‡С‡:РјРј:СЃСЃ): ");
+    Time t1 = read_time("Введите первое время (чч:мм:сс): ");
+    Time t2 = read_time("Введите второе время (чч:мм:сс): ");
 
     swap_times(t1, t2);
 
     print_time("t1 = ", t1);
     print_time("t2 = ", t2);
+    cin.clear();
+    cin.ignore(10000, '\n');
 }
 
-// ======================= Р—Р°РґР°РЅРёРµ 5 =======================
+// ======================= Задание 5 =======================
 
 int global_call_count = 0;
 
 void show_global_call_count()
 {
-    std::cout << "С„СѓРЅРєС†РёСЏ СЃСЂР°Р±РѕС‚Р°Р»Р° " << global_call_count << " СЂР°Р·\n";
+    cout << "функция сработала " << global_call_count << " раз\n";
     ++global_call_count;
 }
 
 void show_static_local_call_count()
 {
     static int static_local_call_count = 0;
-    std::cout << "С„СѓРЅРєС†РёСЏ СЃСЂР°Р±РѕС‚Р°Р»Р° " << static_local_call_count << " СЂР°Р·\n";
+    cout << "функция сработала " << static_local_call_count << " раз\n";
     ++static_local_call_count;
 }
 
 void show_local_call_count()
 {
     int local_call_count = 0;
-    std::cout << "С„СѓРЅРєС†РёСЏ СЃСЂР°Р±РѕС‚Р°Р»Р° " << local_call_count << " СЂР°Р·\n";
+    cout << "функция сработала " << local_call_count << " раз\n";
     ++local_call_count;
 }
 
 void task5()
 {
-    std::cout << "РЎ РіР»РѕР±Р°Р»СЊРЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№:\n";
+    cout << "С глобальной переменной:\n";
     for (int i = 0; i < 10; i++)
     {
         show_global_call_count();
     }
-    std::cout << "РЎРѕ СЃС‚Р°С‚РёС‡РЅРѕР№ Р»РѕРєР°Р»СЊРЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№:\n";
+    cout << "Со статичной локальной переменной:\n";
     for (int i = 0; i < 10; i++)
     {
         show_static_local_call_count();
     }
-    std::cout << "РЎ РѕР±С‹С‡РЅРѕР№ Р»РѕРєР°Р»СЊРЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№:\n";
+    cout << "С обычной локальной переменной:\n";
     for (int i = 0; i < 10; i++)
     {
         show_local_call_count();
     }
+    cin.clear();
+    cin.ignore(10000, '\n');
 }
 
-// ======================= РњРµРЅСЋ =======================
+// ======================= Меню =======================
 
 int main()
 {
-    SetConsoleCP(65001);
-    SetConsoleOutputCP(65001);
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
+    int choice;
 
     while (true)
     {
+        cout << "========== Лабораторная работа №4 ==========\n";
+        cout << "Выберите задание (введите 0 для выхода): ";
 
-        int choice = read_int("Р’С‹Р±РµСЂРёС‚Рµ Р·Р°РґР°РЅРёРµ (0 С‡С‚РѕР±С‹ РІС‹Р№С‚Рё): ");
-        std::cout << "\n";
+        cin >> choice;
+
+        if (cin.fail())
+        {
+            cout << "Ошибка! Введите номер задания.\n";
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
+        }
 
         switch (choice)
         {
-        case 1: task1(); break;
-        case 2: task2(); break;
-        case 3: task3(); break;
-        case 4: task4(); break;
-        case 5: task5(); break;
+        case 1:
+            task1();
+            break;
+        case 2:
+            task2();
+            break;
+        case 3:
+            task3();
+            break;
+        case 4:
+            task4();
+            break;
+        case 5:
+            task5();
+            break;
         case 0:
-            std::cout << "Р’С‹С…РѕРґ.\n";
+            cout << "Выход из программы.\n";
             return 0;
         default:
-            std::cout << "РќРµС‚ С‚Р°РєРѕРіРѕ Р·Р°РґР°РЅРёСЏ. Р’С‹Р±РµСЂРёС‚Рµ С‡РёСЃР»Рѕ РѕС‚ 0 РґРѕ 5.\n";
+            cout << "Неверный пункт меню. Попробуйте снова.\n";
         }
     }
+
+    return 0;
 }
