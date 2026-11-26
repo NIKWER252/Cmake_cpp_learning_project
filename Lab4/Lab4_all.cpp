@@ -134,6 +134,10 @@ void task2()
     Time t2 = read_time("Введите второе время (чч:мм:сс): ");
 
     long totalSecs = time_to_secs(t1) + time_to_secs(t2);
+
+    const long SECS_IN_DAY = 24L * 3600;
+    totalSecs %= SECS_IN_DAY;
+
     Time sum = secs_to_time(totalSecs);
 
     print_time("Сумма: ", sum);
@@ -240,7 +244,7 @@ int main()
 
     while (true)
     {
-        cout << "========== Лабораторная работа №4 ==========\n";
+        cout << "\n========== Лабораторная работа №4 ==========\n";
         cout << "Выберите задание (введите 0 для выхода): ";
 
         cin >> choice;

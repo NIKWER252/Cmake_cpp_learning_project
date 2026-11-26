@@ -166,6 +166,7 @@ void task2()
 }
 
 // ==================== ЗАДАНИЕ 3 ====================
+
 void reversit(char str[])
 {
     int len = strlen(str);
@@ -183,7 +184,7 @@ void task3()
     char str[MAX];
 
     cout << "Введите строку: ";
-    cin.get(); // Очистка потока от '\n' перед вводом
+    cin.get();
     cin.get(str, MAX);
 
     reversit(str);
@@ -191,14 +192,15 @@ void task3()
     cout << "Перевёрнутая строка: " << str << endl;
 }
 
-// ==================== ЗАДАНИЕ 4 ====================
+// ==================== Задание 4 ====================
+
 struct employee
 {
     char name[50];
     long number;
 };
 
-void getdata(employee& emp)
+void getdata(employee& emp, const employee staff[], int current_count)
 {
     cout << "Введите имя: ";
     cin.get();
@@ -211,7 +213,7 @@ void getdata(employee& emp)
 
         if (cin.fail())
         {
-            cout << "Ошибка! Нужно ввести целое число. Попробуйте снова.\n";
+            cout << "Ошибка! Нужно вести целое число. Попробуйте снова.\n";
             cin.clear();
             cin.ignore(10000, '\n');
             continue;
@@ -220,6 +222,22 @@ void getdata(employee& emp)
         if (emp.number < 0)
         {
             cout << "Ошибка! Номер не может быть отрицательным. Попробуйте снова.\n";
+            continue;
+        }
+
+        bool duplicate = false;
+        for (int i = 0; i < current_count; ++i)
+        {
+            if (staff[i].number == emp.number)
+            {
+                duplicate = true;
+                break;
+            }
+        }
+
+        if (duplicate)
+        {
+            cout << "Ошибка! Такой номер уже существует. Введите другой номер.\n";
             continue;
         }
 
@@ -241,7 +259,7 @@ void task4()
     for (int i = 0; i < N; i++)
     {
         cout << "\nСлужащий #" << i + 1 << endl;
-        getdata(staff[i]);
+        getdata(staff[i], staff, i);
     }
 
     cout << "\nДанные всех служащих" << endl;
@@ -347,7 +365,7 @@ int main()
 
     while (true)
     {
-        cout << "========== ЛАБОРАТОРНАЯ РАБОТА №5 ==========\n";
+        cout << "\n========== ЛАБОРАТОРНАЯ РАБОТА №5 ==========\n";
         cout << "Выберите задание (введите 0 для выхода): ";
 
         cin >> choice;
